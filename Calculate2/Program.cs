@@ -12,7 +12,7 @@ namespace Calculate2
 		static void Main(string[] args)
 		{
 			expression = "22 +33*77*55-50/11";
-			Calculate(expression);
+			Console.WriteLine(Calculate(expression));
 		}
 		static double Calculate(string expression)
 		{
@@ -22,17 +22,42 @@ namespace Calculate2
 			for (int i = 0; i < s_operands.Length; i++) d_operands[i] = Convert.ToDouble(s_operands[i]);
 			//char[] operators = expression.Where(item => "+-*/".Contains(item)).ToArray();
 			string[] operators = (expression.Split('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ',')).Where(item=>item!="").ToArray();
+			Print(d_operands);
+			//Console.WriteLine();
+			Print(operators);
 			for(int i = 0; i<operators.Length;i++)
 			{
-				if (operators[i] == "*" || operators[i] == "/")
+				while (operators[i] == "*" || operators[i] == "/")
 				{
 					if (operators[i] == "*") d_operands[i] *= d_operands[i + 1];
 					if (operators[i] == "/") d_operands[i] /= d_operands[i + 1];
+					ShiftLeft(d_operands, i + 1);
+					ShiftLeft(operators, i);
 				}
 			}
-		
+			for (int i = 0; i < operators.Length; i++)
+			{
+				while (operators[i] == "+" || operators[i] == "-")
+				{
+					if (operators[i] == "+") d_operands[i] += d_operands[i + 1];
+					if (operators[i] == "-") d_operands[i] -= d_operands[i + 1];
+					ShiftLeft(d_operands, i + 1);
+					ShiftLeft(operators, i);
+				}
+			}
+
 
 			return d_operands[0];
+		}
+		static void ShiftLeft(double[]arr,int index= 0)
+		{
+			for (int i = index; i < arr.Length-1; i++) arr[i] = arr[i + 1];
+			arr[arr.Length - 1] = 0;
+		}
+		static void ShiftLeft(string[] arr, int index = 0)
+		{
+			for (int i = index; i < arr.Length-1; i++) arr[i] = arr[i + 1];
+			arr[arr.Length - 1] = "\0";
 		}
 		static void Print(string[] arr)
 		{
