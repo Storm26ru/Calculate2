@@ -14,6 +14,18 @@ namespace Calculate2
 			expression = "22 +33*77*55-50/11";
 			Console.WriteLine(Calculate(expression));
 		}
+		static void Explore (string expression)
+        {
+			for(int i =0; i<expression.Length; i++)
+            {
+				if (expression[i] == '(')
+				{
+					for(int j = i+1; j<expression.Length;j++)
+						if(expression[j] ==')') expression = expression.Replace(expression.Substring(i,j-i+1))
+				} 
+
+            }
+        }
 		static double Calculate(string expression)
 		{
 			expression = expression.Replace(" ", "").Replace(".",",");
