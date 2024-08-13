@@ -11,10 +11,12 @@ namespace Calculate2
 		static string expression;
 		static void Main(string[] args)
 		{
-			expression = "(2+3*(5+1)-5)+1"; //"(22+33)*77*(55-50/11)";
+			expression = "((2+3)*(5+1)-5)+1"; //"(22+33)*77*(55-50/11)";
 			//Explore(expression);
 			Console.WriteLine(expression);
-			Console.WriteLine(Calculate(Explore(expression)));
+			string bufer = Explore(expression);
+			Console.WriteLine(bufer+" b");
+			Console.WriteLine(Calculate(bufer));
 		}
 		static string Explore (string expression)
         {
@@ -23,21 +25,21 @@ namespace Calculate2
 
 				if (expression[i] == '(')
 				{
-						Console.WriteLine(expression);
+						Console.WriteLine(expression+" 1");
 					for (int j = i + 1; j < expression.Length; j++)
 					{
 						if (expression[j] == '(')
 						{
 							expression = expression.Replace(expression.Substring(j, expression.Length - j),
-							Explore(expression.Substring(j, expression.Length - j)));
-							Console.WriteLine(expression);
+							Explore(expression.Substring(j+1, expression.Length - j-1)));
+							Console.WriteLine(expression+" 2");
 							break;
 						}
 						if (expression[j] == ')')
 						{
 							expression = expression.Replace(expression.Substring(i, j - i + 1),
 															Calculate(expression.Substring(i + 1, j - i - 1)).ToString());
-							Console.WriteLine(expression);
+							Console.WriteLine(expression+" 3");
 							break;
 						}
 					}
@@ -45,9 +47,10 @@ namespace Calculate2
 
 				if (expression[i]==')')
 				{
+					int index = expression[0] == '(' ? (1) : (0);
 					expression = expression.Replace(expression.Substring(0, i+1),
-															Calculate(expression.Substring(0, i)).ToString());
-							Console.WriteLine(expression);
+															Calculate(expression.Substring(index, i-index)).ToString());
+							Console.WriteLine(expression+" 4");
 					break;
 				}
             }
