@@ -28,22 +28,29 @@ namespace Calculate2
 				{
 					for (int j = i + 1; j < expression.Length; j++)
 					{
-						if (expression[j] == '(') Explore(expression.Substring(j+1, expression.Length - j-1));
+						if (expression[j] == '(')
+						{
+							Explore(expression.Substring(j + 1, expression.Length - j - 1));
+							break;
+						}
 						if (expression[j] == ')')
 						{
 							Program.expression = expression.Replace(expression.Substring(i, j - i + 1),
 															Calculate(expression.Substring(i + 1, j - i - 1)).ToString());
 							Explore(Program.expression);
+							break;
 						}
 					}
 				} 
 
 				if (expression[i]==')')
 				{
-					Program.expression = expression.Replace(expression.Substring(0, i),
+					Program.expression = expression.Replace(expression.Substring(0, i+1),
 															Calculate(expression.Substring(0, i)).ToString());
 					Explore(Program.expression);
+					break;
 				}
+				
             }
         }
 		static double Calculate(string expression)
