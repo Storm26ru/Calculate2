@@ -12,9 +12,8 @@ namespace Calculate2
 		static void Main(string[] args)
 		{
 			expression = "((22+33)*77)*((55-50)/11)";
-			Console.WriteLine(expression);
-			Console.WriteLine(Explore(expression));
-			Console.WriteLine(Calculate(Explore(expression)));
+			Console.Write(expression);
+			Console.WriteLine(" = "+Calculate(Explore(expression)));
 		}
 		static string Explore (string expression)
         {
